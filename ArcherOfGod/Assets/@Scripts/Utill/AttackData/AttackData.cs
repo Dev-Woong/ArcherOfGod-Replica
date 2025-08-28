@@ -46,10 +46,10 @@ public class AttackData : ScriptableObject
     public Vector2 KnockbackForce;
     [Header("이펙트")]
     public string EffectPrefabName;
-    public Vector2 EffectPos;
+    public Vector3 EffectPos;
     [Header("히트 이펙트")]
     public string HitEffectPrefabName;
-    public Vector2 HitEffectPos;
+    public Vector3 HitEffectPos;
 
     [Header("효과음")]
     public AudioClip AttackSFX;

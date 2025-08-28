@@ -17,6 +17,15 @@ public class AttackHandler : MonoBehaviour
         }
         if (attackData.AttackSFX != null)
             SFXManager.s_Instance.PlayAttackSFX(attackData.AttackSFX);
+        if (attackData.EffectPrefabName != "")
+        {
+            var skillEffect = ObjectPoolManager.instance.GetObject(attackData.EffectPrefabName);
+            skillEffect.transform.position = transform.position+ attackData.EffectPos;
+            if (transform.localScale.x == -1)
+            {
+                skillEffect.transform.localScale = new Vector3(-1, 1, 1);
+            }
+        }
         if (attackData.UseCameraShake == true)
         {
             _impulseSource.GenerateImpulse(attackData.ShakeDir);
@@ -40,6 +49,7 @@ public class AttackHandler : MonoBehaviour
             {
                 rangeAttackObject.transform.position = transform.position - attackData.ArrowSpawnPos;
                 rangeAttackObject.transform.localScale = new Vector3(-1,1,1);
+                
                 moveVelocity *= -1;
             }
             else

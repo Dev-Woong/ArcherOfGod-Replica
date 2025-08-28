@@ -19,7 +19,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   ArrowPrefabName: NormalArrow
-  SpecialAblity: 0
+  SpecialAbility: 0
+  AbilityDamageTickCount: 0
+  AbilityTickDamage: 0
   ArrowSpawnPos: {x: 1, y: 0.27, z: 0}
   UseBezierCurve: 1
   SetCurvePos: {x: 0, y: 4}
@@ -31,9 +33,9 @@ MonoBehaviour:
   Knockback: 0
   KnockbackForce: {x: 0, y: 0}
   EffectPrefabName: 
-  EffectPos: {x: 0, y: 0}
-  HitEffectPrefabName: 
-  HitEffectPos: {x: 0, y: 0}
+  EffectPos: {x: 0, y: 0, z: 0}
+  HitEffectPrefabName: NormalEffect
+  HitEffectPos: {x: 0.5, y: 0, z: 0}
   AttackSFX: {fileID: 0}
   HitSFX: {fileID: 0}
   UseCameraShake: 1

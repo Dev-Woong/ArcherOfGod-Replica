@@ -20,8 +20,8 @@ MonoBehaviour:
     m_Bits: 64
   ArrowPrefabName: BurningArrow
   SpecialAbility: 1
-  AbilityDamageTickCount: 6
-  AbilityTickDamage: 2
+  AbilityDamageTickCount: 8
+  AbilityTickDamage: 6
   ArrowSpawnPos: {x: 1, y: 0, z: 0}
   UseBezierCurve: 0
   SetCurvePos: {x: 0, y: 0}
@@ -33,9 +33,9 @@ MonoBehaviour:
   Knockback: 0
   KnockbackForce: {x: 0, y: 0}
   EffectPrefabName: 
-  EffectPos: {x: 0, y: 0}
+  EffectPos: {x: 0, y: 0, z: 0}
   HitEffectPrefabName: ExplosionEffect
-  HitEffectPos: {x: 0, y: 0}
+  HitEffectPos: {x: 0, y: 0, z: 0}
   AttackSFX: {fileID: 0}
   HitSFX: {fileID: 0}
   UseCameraShake: 1
