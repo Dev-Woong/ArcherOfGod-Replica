@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -11,10 +11,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Ground
+  - SideWall
+  - Arrow
   - 
   - 
   - 
@@ -41,3 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Map
+    uniqueID: 2023686663
+    locked: 0
+  - name: Character
+    uniqueID: 766535043
+    locked: 0
+  - name: Arrow
+    uniqueID: 3352901721
+    locked: 0
+  m_RenderingLayers:
+  - Default

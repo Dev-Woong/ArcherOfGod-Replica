@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8fb28da04bca849aa55293ec3b4fce, type: 3}
+  m_Name: TestingSkill 2
+  m_EditorClassIdentifier: 
+  AttackDataName: 
+  SkillIcon: {fileID: -4845884718933533326, guid: 1af12c610706b79449c99897fb69d0d3, type: 3}
+  ArrowPrefabName: 
+  SpecialAblity: 0
+  ArrowSpawnPos: {x: 0, y: 0, z: 0}
+  UseBezierCurve: 0
+  SetCurvePos: {x: 0, y: 0}
+  ArrowVelocity: 0
+  Damage: 0
+  CoolTime: 9
+  JumpAttack: 0
+  JumpForce: {x: 0, y: 0}
+  Knockback: 0
+  KnockbackForce: {x: 0, y: 0}
+  EffectPrefabName: 
+  EffectPos: {x: 0, y: 0}
+  HitEffectPrefabName: 
+  HitEffectPos: {x: 0, y: 0}
+  AttackSFX: {fileID: 0}
+  HitSFX: {fileID: 0}
+  UseCameraShake: 0
+  ShackPower: 0
+  ShakeDir: {x: 0, y: 0}
+  ShakeDuration: 0
