@@ -2073,7 +2073,7 @@ MonoBehaviour:
     m_Bits: 1024
   _filledImage: {fileID: 454136167}
   _hpText: {fileID: 1111114262}
-  MaxHp: 2000
+  MaxHp: 1000
   _damageTextPos: {fileID: 1578708325}
   _animator: {fileID: 0}
   _frozenIcon: {fileID: 2095684860}

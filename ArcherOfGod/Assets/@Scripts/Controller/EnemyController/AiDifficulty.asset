@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b7f43ffc07ea94484f3d58911c3522, type: 3}
   m_Name: AiDifficulty
   m_EditorClassIdentifier: Assembly-CSharp::DifficultyProfile
-  tier: 2
+  tier: 1
   NormalAttackData: {fileID: 11400000, guid: 17a88f3e9ce4d7c479d7b9c572a59ee4, type: 2}
   SkillAttackDatas:
   - {fileID: 11400000, guid: fb7dcb1ba8402f54c817e9f261f5bece, type: 2}
