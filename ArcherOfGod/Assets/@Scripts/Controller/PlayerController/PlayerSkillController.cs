@@ -7,11 +7,14 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] Rigidbody2D _rigidbody2D;
     [SerializeField] Animator _animator;
     [SerializeField] Button[] _skillButtons;
-    public bool Moveable = true;
+    [SerializeField] PlayerMovement _playerMovement;
+    [SerializeField] private ObjectStatus _objectStatus;
     private void Awake()
     {
         if (!_animator) _animator = GetComponent<Animator>();
         if (!_rigidbody2D) _rigidbody2D = GetComponent<Rigidbody2D>();
+        if (!_playerMovement) _playerMovement = GetComponent<PlayerMovement>();
+        _objectStatus = GetComponent<ObjectStatus>();
     }
     void Start()
     {
@@ -32,25 +35,31 @@ public class PlayerSkillController : MonoBehaviour
             btn.onClick.AddListener(slot.OnClickSkillButton);
 
             // 슬롯이 눌렸다는 이벤트를 컨트롤러가 구독 -> 애니메이션 트리거 재생
+            
+
             slot.OnPressed += OnSkillSlotPressed;
         }
     }
+    
     private void OnSkillSlotPressed(SkillSlot slot)
     {
-        // 슬롯에서 바로 트리거명 받기
-        var trigger = slot.TriggerName;
-        if (string.IsNullOrEmpty(trigger))
+        if (_objectStatus.ReturnFrozenStatus()== false)
         {
-            Debug.LogWarning("Skill TriggerName이 비어있음");
-            return;
+            // 슬롯에서 바로 트리거명 받기
+            var skillSlotData = slot;
+            if (string.IsNullOrEmpty(skillSlotData.TriggerName))
+            {
+                Debug.LogWarning("Skill TriggerName이 비어있음");
+                return;
+            }
+            if (skillSlotData.Jump == true)
+            {
+                _animator.SetTrigger("Jump");
+            }
+            _animator.SetTrigger(skillSlotData.TriggerName);
+            _animator.SetBool("isRun", false);
+            _playerMovement.Moveable = false;
+            // 공격 로직은 애니메이션 이벤트에서 처리 (네 계획대로)
         }
-        _animator.SetTrigger(trigger);
-        _animator.SetBool("isRun", false);
-        Moveable = false;
-        // 공격 로직은 애니메이션 이벤트에서 처리 (네 계획대로)
-    }
-    public void CanMove() // AnimationEvent
-    {
-        Moveable = true;
-    }
+    }   
 }

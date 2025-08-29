@@ -6,19 +6,27 @@ public class ArrowSet : MonoBehaviour
     public LayerMask TargetMask;
     public float Damage;
     public SpecialAbility SpecialAbility;
-    public int TickCount;
-    public float TickDamage;
+    public int BurningTickCount;
+    public float BurningTickDamage;
+    public float FrozenTime;
+    public float PoisonTickDamage;
+    public int PoisonTickCount;
+
     public string HitEffectName;
     public Vector3 HitEffectPos;
-    
+
     public void SetUpTarget(AttackData attackData)
     {
         TargetMask = attackData.TargetLayer;
         Damage = attackData.Damage;
         SpecialAbility = attackData.SpecialAbility;
-        TickCount = attackData.AbilityDamageTickCount;
-        TickDamage = attackData.AbilityTickDamage;
+        BurningTickCount = attackData.BurningDamageTickCount;
+        BurningTickDamage = attackData.BurningTickDamage;
         HitEffectName = attackData.HitEffectPrefabName;
         HitEffectPos = attackData.HitEffectPos;
+        FrozenTime = attackData.ForzenTime;
+        PoisonTickDamage = attackData.PoisonDebuffDamage;
+        PoisonTickCount = attackData.PoisonDebuffTickCount;
     }
+
 }

@@ -7,7 +7,7 @@ public enum SpecialAbility
     FIREBURN,
     POISON,
     LIGHTNING,
-    FREEZE,
+    FROZEN,
     EXPLOSION,
 }
 
@@ -24,10 +24,18 @@ public class AttackData : ScriptableObject
     public LayerMask TargetLayer;
     [Header("화살 프리팹 이름")]
     public string ArrowPrefabName;
+    public bool CanMove;
+    public Vector3 MovePosition;
+    public string MoveEffectName;
+    public Vector3 MoveEffectPos;
     [Header("화살 특수능력")]
     public SpecialAbility SpecialAbility;
-    public int AbilityDamageTickCount;
-    public float AbilityTickDamage;
+    public int BurningDamageTickCount;
+    public float BurningTickDamage;
+    public float ForzenTime;
+    public float PoisonDebuffDamage;
+    public int PoisonDebuffTickCount;
+    
     public Vector3 ArrowSpawnPos;
     [Header("베지어 커브")]
     public bool UseBezierCurve;

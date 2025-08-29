@@ -7,16 +7,18 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private LayerMask _objLayerMask;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Animator _animator;
     [SerializeField] private ObjectStatus _objectStatus;
-    
+    [SerializeField] private BoxCollider2D _boxCollider;
     
    
     void Awake()
     {
         _animator = GetComponent<Animator>();
         _objectStatus = GetComponent<ObjectStatus>();
-
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _boxCollider= GetComponent<BoxCollider2D>();
     }
     private void Start()
     {
@@ -24,9 +26,9 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
-        if (_objectStatus._curHp <= 0)
-        {
-            _animator.SetTrigger("Die");
+        if (_objectStatus.ReturnFrozenStatus())
+        {   
+            return;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,14 +42,30 @@ public class EnemyController : MonoBehaviour
                 _objectStatus.OnDamage(arrowSet.Damage, arrowSet.SpecialAbility);
                 if (arrowSet.HitEffectName != "")
                 {
-                    var hitEffect = ObjectPoolManager.instance.GetObject(arrowSet.HitEffectName);
-                    hitEffect.transform.position = arrowSet.transform.position + arrowSet.HitEffectPos;
-                    hitEffect.transform.localScale = arrowSet.transform.localScale;
+                    if (arrowSet.SpecialAbility == SpecialAbility.NONE || arrowSet.SpecialAbility == SpecialAbility.FROZEN)
+                    {
+                        var hitEffect = ObjectPoolManager.Instance.GetObject(arrowSet.HitEffectName);
+                        hitEffect.transform.position = arrowSet.transform.position + arrowSet.HitEffectPos;
+                        hitEffect.transform.localScale = arrowSet.transform.localScale;
+                    }
+                    else
+                    {
+                        
+                        var hitEffect = ObjectPoolManager.Instance.GetObject(arrowSet.HitEffectName);
+                        hitEffect.transform.position = new Vector2(transform.position.x + arrowSet.HitEffectPos.x, _boxCollider.bounds.min.y + arrowSet.HitEffectPos.y);
+                        hitEffect.transform.localScale = arrowSet.transform.localScale;
+                    }
                 }
                 switch (arrowSet.SpecialAbility)
                 {
                     case SpecialAbility.FIREBURN:
                         StartCoroutine(_objectStatus.BurningAbilityDamage(arrow));
+                        break;
+                    case SpecialAbility.FROZEN:
+                        StartCoroutine(_objectStatus.FrozenAbility(arrow,_animator,_spriteRenderer));
+                        break;
+                    case SpecialAbility.POISON:
+                        StartCoroutine(_objectStatus.PoisonAbility(arrow));
                         break;
                 }
                 if (collision.GetComponentInChildren<ParticleSystem>() != null)

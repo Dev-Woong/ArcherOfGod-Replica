@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,8 @@ public class SkillSlot : MonoBehaviour
     public string TriggerName => AttackData?.AnimationTriggerName;
     public bool IsCooling => !_canUseSkill;
     public float Cooldown => AttackData ? AttackData.CoolTime : 0f;
+    public bool Jump => AttackData.JumpAttack;
+    public Vector2 JumpForce => AttackData.JumpForce;
     void Start()
     {   
         if (AttackData.SkillIcon != null)

@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - CenterWall
   - Water
   - UI
   - Enemy
   - Ground
   - SideWall
   - Arrow
-  - 
+  - Player
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Arrow
     uniqueID: 3352901721
+    locked: 0
+  - name: GameUI
+    uniqueID: 3805506421
     locked: 0
   m_RenderingLayers:
   - Default

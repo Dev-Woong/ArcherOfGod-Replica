@@ -12,7 +12,7 @@ public class ObjectPoolManager : MonoBehaviour
         public int count;
     }
 
-    public static ObjectPoolManager instance;
+    public static ObjectPoolManager Instance;
     public bool IsReady { get; private set; }
 
     [SerializeField] private ObjectInfo[] objectInfos;
@@ -22,8 +22,8 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (Instance == null)
+            Instance = this;
         else
         {
             Destroy(this.gameObject);

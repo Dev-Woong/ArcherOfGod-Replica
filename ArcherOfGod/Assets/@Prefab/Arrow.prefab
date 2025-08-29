@@ -193,9 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdbf4aa915ca2f846b51a52d18759231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 0
   _rigidbody: {fileID: 0}
   cacheBeforeTargetDistance: 0.25
   cacheAtLeastTRatio: 0.85
@@ -230,6 +227,13 @@ MonoBehaviour:
     m_Bits: 0
   Damage: 0
   SpecialAbility: 0
+  BurningTickCount: 0
+  BurningTickDamage: 0
+  FrozenTime: 0
+  PoisonTickDamage: 0
+  PoisonTickCount: 0
+  HitEffectName: 
+  HitEffectPos: {x: 0, y: 0, z: 0}
 --- !u!1 &8071697692653566028
 GameObject:
   m_ObjectHideFlags: 0

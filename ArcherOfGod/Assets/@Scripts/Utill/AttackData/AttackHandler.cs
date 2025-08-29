@@ -19,7 +19,7 @@ public class AttackHandler : MonoBehaviour
             SFXManager.s_Instance.PlayAttackSFX(attackData.AttackSFX);
         if (attackData.EffectPrefabName != "")
         {
-            var skillEffect = ObjectPoolManager.instance.GetObject(attackData.EffectPrefabName);
+            var skillEffect = ObjectPoolManager.Instance.GetObject(attackData.EffectPrefabName);
             skillEffect.transform.position = transform.position+ attackData.EffectPos;
             if (transform.localScale.x == -1)
             {
@@ -30,7 +30,12 @@ public class AttackHandler : MonoBehaviour
         {
             _impulseSource.GenerateImpulse(attackData.ShakeDir);
         }
-        var rangeAttackObject = ArrowObjectManager.instance.GetObject(attackData.ArrowPrefabName);
+        if (attackData.CanMove == false)
+        {
+            GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, GetComponent<Rigidbody2D>().linearVelocity.y);
+            GetComponent<Rigidbody2D>().gravityScale = 1;
+        }
+        var rangeAttackObject = ArrowObjectManager.Instance.GetObject(attackData.ArrowPrefabName);
         rangeAttackObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         rangeAttackObject.GetComponent<ArrowSet>().SetUpTarget(attackData);
         if (rangeAttackObject.GetComponentInChildren<ParticleSystem>() != null)
@@ -38,9 +43,11 @@ public class AttackHandler : MonoBehaviour
             var particle = rangeAttackObject.GetComponentInChildren<ParticleSystem>();
             particle.Play();
         }
-        
-        var trail = rangeAttackObject.GetComponentInChildren<TrailRenderer>(true);
-        trail.emitting = true;
+        if (rangeAttackObject.GetComponentInChildren<TrailRenderer>(true) != null)
+        {
+            var trail = rangeAttackObject.GetComponentInChildren<TrailRenderer>();
+            trail.emitting = true;
+        }
         float moveVelocity = attackData.ArrowVelocity;
         if (attackData.UseBezierCurve == false)
         {
@@ -62,13 +69,23 @@ public class AttackHandler : MonoBehaviour
         }
         else
         {
+            if (transform.localScale.x == -1)
+            {
+                rangeAttackObject.transform.position = transform.position - attackData.ArrowSpawnPos;
+                rangeAttackObject.transform.eulerAngles = new Vector3(0, 0, 150);
+            }
+            else 
+            {
+                rangeAttackObject.transform.position = transform.position + attackData.ArrowSpawnPos;
+                
+            }
             rangeAttackObject.GetComponent<ArrowController>().enabled = true;
             var arrow = rangeAttackObject.GetComponent<ArrowController>();
             arrow.spriteForwardIsUp = false;
             arrow.speed = attackData.ArrowVelocity;
-            Vector2 startPoint = transform.position+ attackData.ArrowSpawnPos;
+            
 
-            arrow.LaunchAlongHeight(startPoint,_target,attackData.SetCurvePos.x,attackData.SetCurvePos.y);
+            arrow.LaunchAlongHeight(rangeAttackObject.transform.position, _target,attackData.SetCurvePos.x,attackData.SetCurvePos.y);
         }
         
     }
