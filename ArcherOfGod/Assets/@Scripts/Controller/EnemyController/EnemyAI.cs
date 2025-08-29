@@ -1,6 +1,5 @@
-using Mono.Cecil.Cil;
+
 using UnityEngine;
-using static Unity.Cinemachine.IInputAxisOwner.AxisDescriptor;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAI : MonoBehaviour

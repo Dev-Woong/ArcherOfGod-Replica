@@ -1,7 +1,4 @@
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Playables;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
+
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
