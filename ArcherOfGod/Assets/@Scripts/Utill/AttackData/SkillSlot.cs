@@ -6,14 +6,13 @@ using UnityEngine.UI;
 
 public class SkillSlot : MonoBehaviour
 {
-    
     [SerializeField] private Image _skillIcon;
     [SerializeField] private Image _onCoolTimeImage;
     [SerializeField] private TMP_Text _coolTimeText;
-    public AttackData AttackData;
     [SerializeField] private float _coolTime;
     [SerializeField] private Color32 _coolColor;
     [SerializeField] private Color32 _retrunColor;
+    public AttackData AttackData;
     private bool _canUseSkill = true;
     public event Action<SkillSlot> OnPressed;
     public string TriggerName => AttackData?.AnimationTriggerName;
@@ -69,6 +68,14 @@ public class SkillSlot : MonoBehaviour
     }
     private void Update()
     {
+        if (GameManager.Instance.GameStart == false)
+        {
+            gameObject.GetComponent<Button>().enabled = false;
+        }
+        else
+        {
+            gameObject.GetComponent<Button>().enabled = true;
+        }
         CoolDownSlot();
     }
 }

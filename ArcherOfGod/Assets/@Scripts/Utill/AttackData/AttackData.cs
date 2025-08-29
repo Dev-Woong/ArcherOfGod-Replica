@@ -6,7 +6,7 @@ public enum SpecialAbility
     NONE = 0,
     FIREBURN,
     POISON,
-    LIGHTNING,
+    ELECTRIC,
     FROZEN,
     EXPLOSION,
 }
@@ -35,6 +35,10 @@ public class AttackData : ScriptableObject
     public float ForzenTime;
     public float PoisonDebuffDamage;
     public int PoisonDebuffTickCount;
+    public float ElectricTickDamage;
+    public int ElectricTickCount;
+    [Header("targetSpeed / ElectricSpeedDebuff")]
+    public float ElectricSpeedDebuff;
     
     public Vector3 ArrowSpawnPos;
     [Header("베지어 커브")]

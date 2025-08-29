@@ -24,13 +24,6 @@ public class EnemyController : MonoBehaviour
     {
         _objLayerMask = _objectStatus.SetObjectLayerMask();
     }
-    private void Update()
-    {
-        if (_objectStatus.ReturnFrozenStatus())
-        {   
-            return;
-        }
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 9)
@@ -50,7 +43,6 @@ public class EnemyController : MonoBehaviour
                     }
                     else
                     {
-                        
                         var hitEffect = ObjectPoolManager.Instance.GetObject(arrowSet.HitEffectName);
                         hitEffect.transform.position = new Vector2(transform.position.x + arrowSet.HitEffectPos.x, _boxCollider.bounds.min.y + arrowSet.HitEffectPos.y);
                         hitEffect.transform.localScale = arrowSet.transform.localScale;
@@ -66,6 +58,9 @@ public class EnemyController : MonoBehaviour
                         break;
                     case SpecialAbility.POISON:
                         StartCoroutine(_objectStatus.PoisonAbility(arrow));
+                        break;
+                    case SpecialAbility.ELECTRIC:
+                        StartCoroutine(_objectStatus.ElectricAbility(arrow));
                         break;
                 }
                 if (collision.GetComponentInChildren<ParticleSystem>() != null)

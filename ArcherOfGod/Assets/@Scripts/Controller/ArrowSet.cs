@@ -12,6 +12,10 @@ public class ArrowSet : MonoBehaviour
     public float PoisonTickDamage;
     public int PoisonTickCount;
 
+    public int ElectricTickCount; 
+    public float ElectricTickDamage;
+    public float ElectricDebuffSpeed;
+
     public string HitEffectName;
     public Vector3 HitEffectPos;
 
@@ -27,6 +31,9 @@ public class ArrowSet : MonoBehaviour
         FrozenTime = attackData.ForzenTime;
         PoisonTickDamage = attackData.PoisonDebuffDamage;
         PoisonTickCount = attackData.PoisonDebuffTickCount;
+        ElectricTickCount = attackData.ElectricTickCount;
+        ElectricTickDamage = attackData.ElectricTickDamage;
+        ElectricDebuffSpeed = attackData.ElectricSpeedDebuff;
     }
 
 }

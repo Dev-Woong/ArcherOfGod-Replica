@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public void IsDashFalse() // AnimationEvent
     {
         IsDash = false;
+        _rigidbody2D.linearVelocity = Vector2.zero;
         _rigidbody2D.gravityScale = 1;
     }
     public void IsJumpFalse()
@@ -115,21 +116,32 @@ public class PlayerMovement : MonoBehaviour
         {
             _rigidbody2D.linearVelocity = Vector2.right * attackData.MovePosition;
         }
-        
+    }
+    public void ElectricAttackDash(AttackData attackData)
+    {
+        IsDash = true;
+        var dash = ObjectPoolManager.Instance.GetObject(attackData.MoveEffectName);
+        dash.transform.position = transform.position + attackData.MoveEffectPos;
+        if (transform.localScale.x == -1)
+        {
+            dash.transform.localScale = new Vector3(-1, 1, 1);
+            _rigidbody2D.linearVelocity = new Vector2(-attackData.MovePosition.x, attackData.MovePosition.y);
+        }
+        else
+        {
+            _rigidbody2D.linearVelocity = new Vector2(attackData.MovePosition.x, attackData.MovePosition.y);
+        }
     }
     public void Jump(AttackData attackData) // AnimationEvent
     {
         IsJump = true;
-        //var jumpEffect =
-
         _rigidbody2D.linearVelocity = Vector2.up * attackData.JumpForce.y;
-
         _rigidbody2D.gravityScale = 0;
     }
     
     private void FixedUpdate()
     {
-        if (Moveable == true && _objectStatus.ReturnFrozenStatus()==false)
+        if (Moveable == true && _objectStatus.ReturnFrozenStatus()==false && GameManager.Instance.GameStart == true)
         {
             MoveLeft();
             MoveRight();
@@ -137,8 +149,11 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        MoveSet();
-        NoneInput();
+        if (GameManager.Instance.GameStart == true)
+        {
+            MoveSet();
+            NoneInput();
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

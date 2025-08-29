@@ -29,6 +29,9 @@ MonoBehaviour:
   ForzenTime: 0
   PoisonDebuffDamage: 2
   PoisonDebuffTickCount: 10
+  ElectricTickDamage: 0
+  ElectricTickCount: 0
+  ElectricSpeedDebuff: 0
   ArrowSpawnPos: {x: 1, y: 0, z: 0}
   UseBezierCurve: 1
   SetCurvePos: {x: 0.5, y: 2}
@@ -36,7 +39,7 @@ MonoBehaviour:
   Damage: 2
   CoolTime: 7
   JumpAttack: 1
-  JumpForce: {x: 0, y: 8}
+  JumpForce: {x: 0, y: 10}
   Knockback: 0
   KnockbackForce: {x: 0, y: 0}
   EffectPrefabName: 

@@ -3,16 +3,37 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public bool BattleStart()
+    public GameObject StartObject;
+    public GameObject WinObject;
+    public GameObject LoseObject;
+    public bool GameStart = false;
+    private void Awake()
     {
-        return true;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    public bool BattleFinish()
+    public void BattleFinish(bool win)
     {
-        return false;
+        if (win == true)
+        {
+            WinObject.SetActive(true);
+        }
+        else
+        {
+            LoseObject.SetActive(true);
+        }
+        GameStart = false;
     }
-    void Update()
+    private void Start()
     {
-        
+        WinObject.SetActive(false);
+        LoseObject.SetActive(false);
     }
 }

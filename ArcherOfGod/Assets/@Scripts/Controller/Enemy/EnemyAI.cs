@@ -13,7 +13,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] ObjectStatus _objectStatus;
 
     [Header("Move")]
-    [SerializeField] float _moveSpeed = 2.5f;
+    [SerializeField] float _curMoveSpeed = 2.5f;
+    [SerializeField] float _profileMoveSpeed = 2.5f;
     [SerializeField] float _patrolChangeInterval = 2.5f;
     [SerializeField] Vector2 _patrolChangeJitter = new(0.8f, 1.8f);
 
@@ -63,11 +64,12 @@ public class EnemyAI : MonoBehaviour
 
     public void ApplyDifficulty(DifficultyProfile p)
     {
+        
         if (p == null) return;
         _profile = p;
 
         // 이동/무빙
-        _moveSpeed = p.moveSpeed;
+        _profileMoveSpeed = p.moveSpeed;
         _patrolChangeInterval = p.patrolChangeInterval;
         _patrolChangeJitter = p.patrolChangeJitter;
 
@@ -82,50 +84,61 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (_isActing || _objectStatus.ReturnFrozenStatus()==true)
+        if (GameManager.Instance.GameStart == true)
         {
-            SetRun(false);
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
-
-        // 벽/낭떠러지 감지
-        bool hitWall = Physics2D.OverlapCircle(transform.position, 2f, _wallMask);
-        if (_profile.tier >= DifficultyTier.Hard)
-        {
-            bool DetectArrow = Physics2D.OverlapCircle(transform.position, 6, _arrowMask);
-            if (hitWall ||DetectArrow)
+            if (_isActing || _objectStatus.ReturnFrozenStatus() == true)
             {
-                Flip();
-                SchedulePatrolSwitch(true);
+                SetRun(false);
+                rb.linearVelocity = Vector2.zero;
+                return;
             }
-        }
-        else
-        {
-            if (hitWall)
+            if (_objectStatus.ReturnElectricStatus() == true)
             {
-                Flip();
-                SchedulePatrolSwitch(true);
+                _curMoveSpeed /= _objectStatus.ReturnElectricDebuffSpeed();
             }
+            else
+            {
+                _curMoveSpeed = _profileMoveSpeed;
+            }
+
+                // 벽/낭떠러지 감지
+                bool hitWall = Physics2D.OverlapCircle(transform.position, 2f, _wallMask);
+            if (_profile.tier >= DifficultyTier.Hard)
+            {
+                bool DetectArrow = Physics2D.OverlapCircle(transform.position, 6, _arrowMask);
+                if (hitWall || DetectArrow)
+                {
+                    Flip();
+                    SchedulePatrolSwitch(true);
+                }
+            }
+            else
+            {
+                if (hitWall)
+                {
+                    Flip();
+                    SchedulePatrolSwitch(true);
+                }
+            }
+
+            // 패트롤 방향/정지 토글
+            if (Time.time >= _nextPatrolSwitchAt)
+            {
+                // 0(정지) 확률 낮게, 좌/우 랜덤
+                int r = Random.Range(0, 100);
+                if (r < 15) _moveDir = 0;
+                else _moveDir = (Random.value < 0.5f) ? -1 : 1;
+
+                SchedulePatrolSwitch();
+            }
+
+            // 이동
+            rb.linearVelocity = new Vector2(_moveDir * _curMoveSpeed, rb.linearVelocity.y);
+            SetRun(_moveDir != 0);
+
+            // 공격/스킬 시도
+            TryAttackOrSkill();
         }
-
-        // 패트롤 방향/정지 토글
-        if (Time.time >= _nextPatrolSwitchAt)
-        {
-            // 0(정지) 확률 낮게, 좌/우 랜덤
-            int r = Random.Range(0, 100);
-            if (r < 15) _moveDir = 0;
-            else _moveDir = (Random.value < 0.5f) ? -1 : 1;
-
-            SchedulePatrolSwitch();
-        }
-
-        // 이동
-        rb.linearVelocity = new Vector2(_moveDir * _moveSpeed, rb.linearVelocity.y);
-        SetRun(_moveDir != 0);
-
-        // 공격/스킬 시도
-        TryAttackOrSkill();
     }
 
     void TryAttackOrSkill()
